@@ -37,7 +37,7 @@ $wgStylePath = "$wgScriptPath/skins";
 
 ## The relative URL path to the logo.  Make sure you change this from the default,
 ## or else you'll overwrite your logo when you upgrade!
-$wgLogo             = "$wgStylePath/common/images/wiki.png";
+$wgLogo             = "$wgStylePath/common/images/champs.png";
 
 ## UPO means: this is also a user preference option
 
@@ -123,6 +123,7 @@ $wgResourceLoaderMaxQueryLength = -1;
 
 # The following permissions were set based on your choice in the installer
 $wgGroupPermissions['*']['edit'] = false;
+$wgGroupPermissions['*']['createaccount'] = false;
 
 # Enabled Extensions. Most extensions are enabled by including the base extension file here
 # but check specific extension documentation for more details
@@ -133,4 +134,24 @@ require_once( "$IP/extensions/WikiEditor/WikiEditor.php" );
 
 # End of automatically generated settings.
 # Add more configuration options below.
+
+$wgExtraNamespaces = array(
+  100 => "Code",
+  101 => "Code_Diskussion",
+  102 => "Media",
+  103 => "Media_Discussion",
+  104 => "Log",
+  105 => "Log_Discussion",
+  106 => "Text",
+  107 => "Text_Discussion",
+  108 => "Event",
+  109 => "Event_Discussion",
+  
+);
+
+$wgContentNamespaces[] = 100;
+$wgContentNamespaces[] = 102;
+$wgContentNamespaces[] = 104;
+$wgContentNamespaces[] = 106;
+$wgContentNamespaces[] = 108;
 
