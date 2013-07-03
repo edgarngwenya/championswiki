@@ -134,6 +134,9 @@ require_once( "$IP/extensions/WikiEditor/WikiEditor.php" );
 
 # End of automatically generated settings.
 # Add more configuration options below.
+$wgArticlePath = '/wiki/$1';
+$wgUsePathInfo = true;
+$wgShowExceptionDetails = true;
 
 $wgExtraNamespaces = array(
   100 => "Code",
