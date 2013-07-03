@@ -1,0 +1,25 @@
+#LogUploader div {
+  padding: 2px;
+}
+
+#LogUploader .form_block {
+  float: none;
+}
+
+#LogUploader .form_block_title {
+  font-weight: bold;
+}
+
+#LogUploader input .text {
+  width: 200px;
+}
+
+#LogUploader .error {
+  color: red;
+}
+
+#LogUploader .option_title {
+  padding-left: 20px;
+  float: left;
+  width: 100px;
+}
