@@ -3,9 +3,8 @@
 -- Unique indexes need to be handled with INSERT SELECT since just running
 -- the CREATE INDEX statement will fail if there are duplicate values.
 --
--- Ignore duplicates, several tables will have them (e.g. bug 16966) but in 
--- most cases it's harmless to discard them. We'll keep the old tables with 
--- duplicates in so that the user can recover them in case of disaster.
+-- Ignore duplicates, several tables will have them (e.g. bug 16966) but in
+-- most cases it's harmless to discard them.
 
 --------------------------------------------------------------------------------
 -- Drop temporary tables from aborted runs
@@ -219,7 +218,7 @@ CREATE TABLE /*_*/math_tmp (
   math_outputhash varbinary(16) NOT NULL,
   math_html_conservativeness tinyint NOT NULL,
   math_html text,
-  math_mathml text  
+  math_mathml text
 );
 
 CREATE UNIQUE INDEX /*i*/math_inputhash ON /*_*/math_tmp (math_inputhash);
@@ -296,41 +295,41 @@ INSERT OR IGNORE INTO /*_*/page_props_tmp SELECT * FROM /*_*/page_props;
 -- Do the table renames
 --------------------------------------------------------------------------------
 
-ALTER TABLE /*_*/user RENAME TO /*_*/user_old_13;
+DROP TABLE /*_*/user;
 ALTER TABLE /*_*/user_tmp RENAME TO /*_*/user;
-ALTER TABLE /*_*/user_groups RENAME TO /*_*/user_groups_old_13;
+DROP TABLE /*_*/user_groups;
 ALTER TABLE /*_*/user_groups_tmp RENAME TO /*_*/user_groups;
-ALTER TABLE /*_*/page RENAME TO /*_*/page_old_13;
+DROP TABLE /*_*/page;
 ALTER TABLE /*_*/page_tmp RENAME TO /*_*/page;
-ALTER TABLE /*_*/revision RENAME TO /*_*/revision_old_13;
+DROP TABLE /*_*/revision;
 ALTER TABLE /*_*/revision_tmp RENAME TO /*_*/revision;
-ALTER TABLE /*_*/pagelinks RENAME TO /*_*/pagelinks_old_13;
+DROP TABLE /*_*/pagelinks;
 ALTER TABLE /*_*/pagelinks_tmp RENAME TO /*_*/pagelinks;
-ALTER TABLE /*_*/templatelinks RENAME TO /*_*/templatelinks_old_13;
+DROP TABLE /*_*/templatelinks;
 ALTER TABLE /*_*/templatelinks_tmp RENAME TO /*_*/templatelinks;
-ALTER TABLE /*_*/imagelinks RENAME TO /*_*/imagelinks_old_13;
+DROP TABLE /*_*/imagelinks;
 ALTER TABLE /*_*/imagelinks_tmp RENAME TO /*_*/imagelinks;
-ALTER TABLE /*_*/categorylinks RENAME TO /*_*/categorylinks_old_13;
+DROP TABLE /*_*/categorylinks;
 ALTER TABLE /*_*/categorylinks_tmp RENAME TO /*_*/categorylinks;
-ALTER TABLE /*_*/category RENAME TO /*_*/category_old_13;
+DROP TABLE /*_*/category;
 ALTER TABLE /*_*/category_tmp RENAME TO /*_*/category;
-ALTER TABLE /*_*/langlinks RENAME TO /*_*/langlinks_old_13;
+DROP TABLE /*_*/langlinks;
 ALTER TABLE /*_*/langlinks_tmp RENAME TO /*_*/langlinks;
-ALTER TABLE /*_*/site_stats RENAME TO /*_*/site_stats_old_13;
+DROP TABLE /*_*/site_stats;
 ALTER TABLE /*_*/site_stats_tmp RENAME TO /*_*/site_stats;
-ALTER TABLE /*_*/ipblocks RENAME TO /*_*/ipblocks_old_13;
+DROP TABLE /*_*/ipblocks;
 ALTER TABLE /*_*/ipblocks_tmp RENAME TO /*_*/ipblocks;
-ALTER TABLE /*_*/watchlist RENAME TO /*_*/watchlist_old_13;
+DROP TABLE /*_*/watchlist;
 ALTER TABLE /*_*/watchlist_tmp RENAME TO /*_*/watchlist;
-ALTER TABLE /*_*/math RENAME TO /*_*/math_old_13;
+DROP TABLE /*_*/math;
 ALTER TABLE /*_*/math_tmp RENAME TO /*_*/math;
-ALTER TABLE /*_*/interwiki RENAME TO /*_*/interwiki_old_13;
+DROP TABLE /*_*/interwiki;
 ALTER TABLE /*_*/interwiki_tmp RENAME TO /*_*/interwiki;
-ALTER TABLE /*_*/page_restrictions RENAME TO /*_*/page_restrictions_old_13;
+DROP TABLE /*_*/page_restrictions;
 ALTER TABLE /*_*/page_restrictions_tmp RENAME TO /*_*/page_restrictions;
-ALTER TABLE /*_*/protected_titles RENAME TO /*_*/protected_titles_old_13;
+DROP TABLE /*_*/protected_titles;
 ALTER TABLE /*_*/protected_titles_tmp RENAME TO /*_*/protected_titles;
-ALTER TABLE /*_*/page_props RENAME TO /*_*/page_props_old_13;
+DROP TABLE /*_*/page_props;
 ALTER TABLE /*_*/page_props_tmp RENAME TO /*_*/page_props;
 
 --------------------------------------------------------------------------------
@@ -407,11 +406,10 @@ CREATE INDEX /*i*/type_time ON /*_*/logging (log_type, log_timestamp);
 CREATE INDEX /*i*/user_time ON /*_*/logging (log_user, log_timestamp);
 CREATE INDEX /*i*/page_time ON /*_*/logging (log_namespace, log_title, log_timestamp);
 CREATE INDEX /*i*/times ON /*_*/logging (log_timestamp);
-CREATE INDEX /*i*/tb_page ON /*_*/trackbacks (tb_page);
 CREATE INDEX /*i*/job_cmd_namespace_title ON /*_*/job (job_cmd, job_namespace, job_title);
 CREATE INDEX /*i*/rd_ns_title ON /*_*/redirect (rd_namespace,rd_title,rd_from);
 CREATE INDEX /*i*/qcc_type ON /*_*/querycachetwo (qcc_type,qcc_value);
 CREATE INDEX /*i*/qcc_title ON /*_*/querycachetwo (qcc_type,qcc_namespace,qcc_title);
 CREATE INDEX /*i*/qcc_titletwo ON /*_*/querycachetwo (qcc_type,qcc_namespacetwo,qcc_titletwo);
 
-INSERT INTO /*_*/updatelog VALUES ('initial_indexes');
+INSERT INTO /*_*/updatelog (ul_key) VALUES ('initial_indexes');
