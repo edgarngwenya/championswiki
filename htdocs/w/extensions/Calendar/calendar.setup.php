@@ -1,4 +1,5 @@
 <?php
+
 /* Description:
  *   This extension implements a calendar in PHP, designed to integrate into 
  *   the MediaWiki wiki.  This calendar supports custom themes 
@@ -129,40 +130,39 @@ $wgAutoloadClasses['Calendar'] = dirname(__FILE__) . '/Calendar.php';
 
 // function adds the wiki extension
 function wfCalendarExtension() {
-    global $wgParser;
-    $wgParser->setHook( "calendar", "displayCalendar" );
-    $wgParser->setHook( "date", "displayDate" );
+	global $wgParser;
+	$wgParser->setHook("calendar", "displayCalendar");
+	$wgParser->setHook("date", "displayDate");
 }
 
 // path to the root of the web server
-//$wgLocalPath = str_replace("\\", "/" , substr($_SERVER["SCRIPT_FILENAME"], 0, strlen($_SERVER["SCRIPT_FILENAME"]) - strlen($_SERVER["SCRIPT_NAME"])));
+$wgLocalPath = str_replace("\\", "/", dirname(dirname(dirname(dirname(__FILE__)))));
 
 // callback function (hook) for the calendar
 function displayCalendar($paramstring = "", $params = array()) {
-	global $wgParser,$wgUser, $wgScriptPath;
-	
+	global $wgParser, $wgUser, $wgScriptPath;
+
 	$wgParser->disableCache();
-	
+
 	// grab the page title
 	if (defined('MAG_PAGENAME')) {
 		$title = $wgParser->getVariableValue(MAG_PAGENAME);
-	}
-	else {
+	} else {
 		$title = $wgParser->getVariableValue("pagename");
 	}
-	
+
 	// check for the calendar "name" parameter.
 	$name = "";
 	if (isset($params["name"])) {
 		$name = $params["name"];
 	}
-	
+
 	// the calendar
 	$calendar = null;
-	
+
 	// generate the cookie name
 	$cookie_name = 'calendar_' . str_replace(' ', '_', $title) . str_replace(' ', '_', $name);
-	
+
 	// check if this user has a calendar saved in their session	
 	if (isset($_COOKIE[$cookie_name])) {
 		$temp = explode("`", $_COOKIE[$cookie_name]);
@@ -171,70 +171,72 @@ function displayCalendar($paramstring = "", $params = array()) {
 		$calendar->setYear($temp[1]);
 		$calendar->setTitle($temp[2]);
 		$calendar->setName($temp[3]);
-	}
-	else {
+	} else {
 		$calendar = new Calendar();
 		$calendar->setTitle($title);
 		$calendar->setName($name);
-		
+
 		// check for the "startyear" parameter
 
-	        if (isset($params["year"])) {
-                    $calendar->setYear($params["year"]);
-                }
-                
+		if (isset($params["year"])) {
+			$calendar->setYear($params["year"]);
+		}
+
 		// save the calendar back into the session
 		setcookie($cookie_name, $calendar->getMonth() . "`" . $calendar->getYear() .
 				"`" . $calendar->getTitle() . "`" . $calendar->getName(), 0, "/", '');
 	}
-	
+
 	// check for the "startyear" parameter
 	if (isset($params["startyear"])) {
 		$calendar->setStartYear($params["startyear"]);
 	}
-	
+
 	// check for the "yearsahead" parameter
 	if (isset($params["yearsahead"])) {
 		$calendar->setYearsAhead($params["yearsahead"]);
 	}
-	
+
 	return "<html>" . $calendar->getHTML() . "</html>";
 }
 
 // callback function (hook) for the calendar
 
 function displayDate($paramstring = "", $params = array()) {
-	global $wgParser,$wgUser, $wgScriptPath;
+	global $wgParser, $wgUser, $wgScriptPath, $wgLocalPath, $wgOut;
 	$wgParser->disableCache();
-        // grab the page title
-
+	// grab the page title
 	// check for the date "name" parameter.
 	$name = "";
 	if (isset($params["name"])) {
 		$name = $params["name"];
 	}
-	
+
 	$page = "";
 	if (isset($params["page"])) {
 		$page = $params["page"];
 	}
+	
+	$path = str_replace($wgLocalPath, '', dirname(__FILE__));
 
 	//http://champs.jaburo.net/wiki/extensions/CalendarAdjust.php?year=2055&month=12&title=Test_Calendar&name=Media&referer=%2Fwiki%2Findex.php%2FTest_Calendar
-	if ( preg_match('/(\d{4}).(\d{2}).(\d{2})/', $paramstring, $matches ) ) {
-	    $year = $matches[1];
-	    $month = $matches[2];
-	    $day = $matches[3];
-            $datestring = sprintf( '%02d/%02d/%s', intval($month), intval($day), $year );
-            $url = sprintf( '/wiki/extensions/CalendarAdjust.php?year=%s&month=%s&title=%s&name=%s&referer=/wiki/index.php/%s',
-                $year,
-                $month,
-                $page,
-                htmlspecialchars($name),
-                $page
-            );
-            return "<a href=\"" . $url . "\">" . $datestring . "</a>";
-        }
-        
-        return $paramstring;
+	if (preg_match('/(\d{4}).(\d{2}).(\d{2})/', $paramstring, $matches)) {
+		$year = $matches[1];
+		$month = $matches[2];
+		$day = $matches[3];
+		$datestring = sprintf('%02d/%02d/%s', intval($month), intval($day), $year);
+		$url = sprintf($path . '/CalendarAdjust.php?year=%s&month=%s&title=%s&name=%s&referer=/wiki/%s', 
+				$year, 
+				$month, 
+				$page, 
+				htmlspecialchars($name), 
+				$page
+		);
+		
+		return "<a href=\"" . $url . "\">" . $datestring . "</a>";
+	}
+
+	return $paramstring;
 }
+
 ?>

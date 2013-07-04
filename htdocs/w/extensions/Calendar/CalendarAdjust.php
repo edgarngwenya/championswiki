@@ -2,9 +2,6 @@
 // This file will modify the month and year of the calendar in the session object.
 // it will also handle creating a new event
 
-// determine the local base path to this wiki (rather than using server variable DOCUMENT_ROOT)
-$wgLocalPath = str_replace("\\", "/" , substr($_SERVER["SCRIPT_FILENAME"], 0, strlen($_SERVER["SCRIPT_FILENAME"]) - strlen($_SERVER["SCRIPT_NAME"])));
-
 // check for the parameters
 if (isset($_GET["month"]) && isset($_GET["year"]) && isset($_GET["title"]) && isset($_GET["name"]) && !isset($_GET["day"]) && isset($_GET['referer'])) {
 	// generate the cookie name

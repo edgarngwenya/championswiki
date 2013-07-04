@@ -52,7 +52,7 @@ class Calendar
     // Generate the HTML for a given month
     function getHTML()
     {   
-       	global $wgScriptPath, $wgLocalPath;
+       	global $wgScriptPath, $wgLocalPath, $wgOut;
        	
         /***** Replacement tags *****/
         // the month select box [[MonthSelect]]
@@ -121,10 +121,7 @@ class Calendar
     	// the path to this extension (install location)
 		$calendarExtensionPath = str_replace("\\", "/", substr(dirname(__FILE__), strlen($wgLocalPath)));
     	// referrer (the page with the calendar currently displayed)
-    	$referrerURL = $_SERVER['PHP_SELF'];
-    	if ($_SERVER['QUERY_STRING'] != '') {
-    		$referrerURL .= "?" . $_SERVER['QUERY_STRING'];
-    	}
+    	$referrerURL = Title::newFromText( $wgOut->getPageTitle() )->getFullURL();
     	// the path to the CalendarAdjust.php file
     	$calendarAdjustPath = $calendarExtensionPath . "/CalendarAdjust.php";
     	// the template file (full path needed)
