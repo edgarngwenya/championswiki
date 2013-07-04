@@ -39,8 +39,11 @@ $viewCommand = '+media'; //'view';
 
 $mush = new MUSHRobot( 'tangent.dune.net', 6363 );
 $mush->connect();
+exit(1);
+
 $mush->login( 'Robbie', 'robbie' );
 $text = $mush->send( $listCommand );
+print $text;
 
 preg_match_all( '/\s+(\d\d\d\d)/', $text, $media );
 foreach ( $media[1] as $m ) {
