@@ -1,6 +1,4 @@
 <?
-
-
 /*
  * Script to update Media articles from the MUSH
  *
@@ -9,30 +7,8 @@
  * @package MediaWiki
  * @subpackage maintenance
  */
- 
-// Move logs into the Logs namespace
-// Special logs tag: recent logs, logs including this character
-
-
-
-/*
-select p.page_title
-from page p, categorylinks c
-where p.page_id = c.cl_from
-and c.cl_to = 'Media'
-;
-*/
-  
-  
-
-
-
-
 
 require_once( 'commandLine.inc' );
-//require_once( '/usr/share/php/PEAR.php' );
-//require_once( '/usr/share/php/Net/Socket.php' );
-
 
 $listCommand = '+media'; //'research';
 $viewCommand = '+media'; //'view';
