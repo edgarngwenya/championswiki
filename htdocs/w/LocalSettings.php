@@ -158,3 +158,7 @@ $wgContentNamespaces[] = 104;
 $wgContentNamespaces[] = 106;
 $wgContentNamespaces[] = 108;
 
+# Plugins
+require_once( "$IP/extensions/smarty/smarty.setup.php");
+require_once( "$IP/extensions/FillInForm/FillInForm.setup.php");
+require_once( "$IP/extensions/MUSH/mush.setup.php");
