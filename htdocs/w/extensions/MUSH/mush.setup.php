@@ -17,6 +17,7 @@ $wgAutoloadClasses['MUSHRobot'] = dirname(__FILE__) . '/MUSHRobot.php';
 $wgAutoloadClasses['LogUploader'] = dirname(__FILE__) . '/LogUploader.php';
 $wgAutoloadClasses['LogScrubber'] = dirname(__FILE__) . '/LogScrubber.php';
 $wgSpecialPages['LogUploader'] = 'LogUploader';
+$wgLocalPath = str_replace("\\", "/", dirname(dirname(dirname(dirname(__FILE__)))));
 
 # Upload Log Permission
 $wgGroupPermissions['*']['uploadlog'] = false;
@@ -32,6 +33,7 @@ function efMUSHSetup() {
     $wgParser->setHook( 'mediasearch', 'efMediaSearchRender' );
     $wgParser->setHook( 'loginfo', 'efLogInfoRender' );
     $wgParser->setHook( 'logsearch', 'efLogSearchRender' );
+	$wgParser->setHook( 'date', "displayDate");
 }
  
 function efMediaInfoRender( $input, $args, $parser ) {
@@ -106,6 +108,43 @@ function efLogInfoDelete( &$article ) {
 function efLogInfoDeleteComplete( &$article ) {
 	global $logInfo;
 	return $logInfo->delete( $article );
+}
+
+function displayDate($paramstring = "", $params = array()) {
+	global $wgParser, $wgUser, $wgScriptPath, $wgLocalPath, $wgOut;
+	$wgParser->disableCache();
+	// grab the page title
+	// check for the date "name" parameter.
+	$name = "";
+	if (isset($params["name"])) {
+		$name = $params["name"];
+	}
+
+	$page = "";
+	if (isset($params["page"])) {
+		$page = $params["page"];
+	}
+	
+	$path = str_replace($wgLocalPath, '', dirname(__FILE__));
+
+	//http://champs.jaburo.net/wiki/extensions/CalendarAdjust.php?year=2055&month=12&title=Test_Calendar&name=Media&referer=%2Fwiki%2Findex.php%2FTest_Calendar
+	if (preg_match('/(\d{4}).(\d{2}).(\d{2})/', $paramstring, $matches)) {
+		$year = $matches[1];
+		$month = $matches[2];
+		$day = $matches[3];
+		$datestring = sprintf('%02d/%02d/%s', intval($month), intval($day), $year);
+		$url = sprintf($path . '/CalendarAdjust.php?year=%s&month=%s&title=%s&name=%s&referer=/wiki/%s', 
+				$year, 
+				$month, 
+				'calendar', 
+				htmlspecialchars($name), 
+				$page
+		);
+		
+		return "<a href=\"" . $url . "\">" . $datestring . "</a>";
+	}
+
+	return $paramstring;
 }
 
 ?>
