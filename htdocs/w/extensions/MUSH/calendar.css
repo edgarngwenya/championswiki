@@ -94,7 +94,6 @@
 .date {
 	height: 20px;
 	width: 20px;
-	float: left;
 	background-color: #E0E0E0;
 	border-width: 1px 1px 1px 1px;
 	border-color: #C0C0C0;
@@ -104,17 +103,7 @@
 }
 
 .calendar_items {
-	float: left;
 	font-size: 10px;
 	border: none;
+	overflow: hidden;
 }
-
-li a {
-	text-overflow: ellipsis;
-	white-space: nowrap;
-}
-
-
-
-
-

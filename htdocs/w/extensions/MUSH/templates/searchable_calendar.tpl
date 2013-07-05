@@ -64,7 +64,7 @@
 				<div class="calendar_items">
 					<ul>
 						{foreach from=$events[$d] item=i}
-						<li><a href="{$i.page_link}">{$i.title}</a></li>
+						<li><a href="{$i.page_link}" title="{$i.title}">{$i.title}</a></li>
 						{/foreach}
 					</ul>
 				</div>
