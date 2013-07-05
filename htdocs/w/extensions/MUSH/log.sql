@@ -25,8 +25,10 @@ CREATE TABLE `log_info` (
   `date` date NOT NULL,
   `plot` varchar(255) default NULL,
   `summary` text,
+  `sequence_number` int(11) unsigned NOT NULL,
+  UNIQUE(plot, sequence_number),
   PRIMARY KEY  (`page_id`)
-) ENGINE=INNODB DEFAULT CHARSET=latin1;
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 --
 -- Table structure for table `rp_log_cast`
@@ -38,8 +40,8 @@ CREATE TABLE `log_info_cast` (
   `page_id` int(11) unsigned NOT NULL,
   `person` varchar(255) default NULL,
   PRIMARY KEY  (`cast_id`),
-  KEY `page_id` (`page_id`)
-) ENGINE=INNODB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
+  FOREIGN KEY (`page_id`) REFERENCES `log_info` (`page_id`) On DELETE CASCADE
+) ENGINE=INNODB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

@@ -5,6 +5,10 @@ $wgExtensionFunctions[] = 'efMUSHSetup';
 $wgHooks['ArticleSaveComplete'][] = 'efMediaInfoSave';
 $wgHooks['ArticleDelete'][] = 'efMediaInfoDelete';
 $wgHooks['ArticleDeleteComplete'][] = 'efMediaInfoDeleteComplete';
+$wgHooks['ArticleSaveComplete'][] = 'efLogInfoSave';
+$wgHooks['ArticleDelete'][] = 'efLogInfoDelete';
+$wgHooks['ArticleDeleteComplete'][] = 'efLogInfoDeleteComplete';
+$wgAutoloadClasses['LogInfo'] = dirname(__FILE__) . '/LogInfo.php';
 $wgAutoloadClasses['MediaInfo'] = dirname(__FILE__) . '/MediaInfo.php';
 $wgAutoloadClasses['Searchable'] = dirname(__FILE__) . '/Searchable.php';
 $wgAutoloadClasses['MediaSearch'] = dirname(__FILE__) . '/MediaSearch.php';
@@ -64,6 +68,43 @@ function efMediaInfoDelete( &$article ) {
 function efMediaInfoDeleteComplete( &$article ) {
 	global $mediaInfo;
 	return $mediaInfo->delete( $article );
+}
+
+function efLogInfoRender( $input, $args, $parser ) {
+	$parser->disableCache();
+	global $logInfo;
+	$logInfo = new LogInfo();
+    $logInfo->parse( $input );
+    return $parser->recursiveTagParse( $logInfo->render() );
+}
+
+function efLogSearchRender( $input, $args, $parser ) {
+	$parser->disableCache();
+	$logSearch = new LogSearch( $args );
+    $logSearch->parse( $input );
+	$output = $logSearch->render();
+	return $output;
+}
+
+function efLogInfoSave( &$article ) {
+	global $logInfo;		
+	if ( !$logInfo ) {
+		$logInfo = new LogInfo();
+	}
+	
+	return $logInfo->save( $article );
+}
+
+function efLogInfoDelete( &$article ) {
+	global $logInfo;
+	$logInfo = new LogInfo();
+	$logInfo->page_id = $article->getID();
+	return true;
+}
+
+function efLogInfoDeleteComplete( &$article ) {
+	global $logInfo;
+	return $logInfo->delete( $article );
 }
 
 ?>
