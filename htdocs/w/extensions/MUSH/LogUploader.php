@@ -144,40 +144,33 @@ class LogUploader extends SpecialPage {
 
 		preg_match('/^(\d\d)[-\/]{1}(\d\d)[-\/]{1}(\d\d\d\d)$/', $params['date'], $match);
 		$date = sprintf('%s/%s/%s', $match[3], $match[1], $match[2]);
-
-		$plot = ( $params['plot'] ) ? "[[" . $params['plot'] . "]]" : 'None';
-
+		$plot = ( $params['plot'] ) ? $params['plot'] : 'None';
 		$text .= "\n\n[[Category:Logs|$articleTitle]] [[Category:Logs $date]]";
 
 		$cast = '';
 		foreach ($data['cast'] as $person) {
-			$cast .= ( $cast ? ', ' : '' ) . "[[$person]]";
+			$cast .= "\t<character>$person</character>\n";
 		}
 
-		$prev = 'None';
-		$next = 'None';
+		$sequenceNumber = 1;
 
 		if (preg_match('/^(.*), Scene (\d+)$/', $articleTitle, $match)) {
-			$scene = $match[2];
-			if ($scene > 1) {
-				$prev = sprintf('[[Log:%s, Scene %d|Scene %d]]', $match[1], $scene - 1, $scene - 1);
-			}
-			$next = sprintf('[[Log:%s, Scene %d|Scene %d]]', $match[1], $scene + 1, $scene + 1);
+			$sequenceNumber = $match[2];
 		}
 
 		$template = <<<EOT
-{{Template:Log_Summary
-|name={{PAGENAME}}
-|plot=$plot
-|cast=$cast
-|prevscene=$prev
-|nextscene=$next
-|date=<date name="Logs" page="Logs">$date</date>
-}}
+<loginfo>
+<plot>$plot</plot>
+<date>$date</date>
+<cast>
+$cast
+</cast>
+<sequence_number>$sequenceNumber</sequence_number>
+</loginfo>
 
 EOT;
 
-		$text = $template . $text;
+		$text = $template . "\n" . $text;
 		return $text;
 	}
 
