@@ -80,6 +80,9 @@ class LogInfo {
 	}
 	
 	private function getSceneLink( $plot, $comparison, $sequenceNumber, $sortOrder ) {
+		if (!$plot)
+			return 'None';
+		
 		$dbr =& wfGetDB( DB_SLAVE );
 		$name = false;		
 		$query = 

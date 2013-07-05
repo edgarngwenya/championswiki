@@ -77,7 +77,7 @@ function updateContent($articleTitle, $content) {
 	preg_match('/^\\{\\{Template\\:Log_Summary.*plot=([^\n]+).*cast=([^\n]+).*(\d{4}\\/\d{2}\\/\d{2}).*\\}\\}$/ms', $content, $matches);
 	
 	if ($matches) {
-		$plot = trim(str_replace("]", "", str_replace("[", "",$matches[1])));
+		$plot = trim(str_replace("None", "", str_replace("]", "", str_replace("[", "",$matches[1]))));
 		$cast = convertCast($matches[2]);
 		$date = $matches[3];
 		
