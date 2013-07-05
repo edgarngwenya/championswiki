@@ -20,14 +20,12 @@ class LogSearch extends Searchable {
 		
 		$query =
 			"select p.page_id, p.page_title, p.page_namespace, ".
-			"m.ic_date, m.ooc_date, m.title, m.source, m.reporter ".
-			"from page p, media_info m ".
-			"where m.page_id = p.page_id ";
-		
-		
+			"l.date, l.sequence_number, l.plot ".
+			"from page p, log_info l ".
+			"where l.page_id = p.page_id ";
 			
 		$query .=
-			"order by ooc_date desc ";
+			"order by date desc ";
 		
 		$limit = array();
 		if ( $xml->limit ) {
@@ -57,11 +55,10 @@ class LogSearch extends Searchable {
 				'page_namespace' => $row->page_namespace,
 				'page_link' => $title->getLocalURL(),
 				'name' => Title::makeName( $row->page_namespace, $row->page_title ),
-				'ic_date' => $row->ic_date,
-				'ooc_date' => $row->ooc_date,
-				'title' => $row->title,
-				'source' => $row->source,
-				'reporter' => $row->reporter,
+				'title' => Title::makeName( $row->page_namespace, $row->page_title ),
+				'date' => $row->date,
+				'plot' => $row->plot,
+				'sequence_number' => $row->sequence_number,
 			);
 		}
 		$dbr->freeResult( $res );

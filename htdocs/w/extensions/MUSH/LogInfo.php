@@ -2,6 +2,7 @@
 class LogInfo {
 	private $plot = false;
 	private $sequenceNumber = false;
+	private $date = false;
 	private $cast = array();
 	
 	public function __construct() {

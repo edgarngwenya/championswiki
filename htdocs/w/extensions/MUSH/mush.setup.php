@@ -11,6 +11,7 @@ $wgHooks['ArticleDeleteComplete'][] = 'efLogInfoDeleteComplete';
 $wgAutoloadClasses['LogInfo'] = dirname(__FILE__) . '/LogInfo.php';
 $wgAutoloadClasses['MediaInfo'] = dirname(__FILE__) . '/MediaInfo.php';
 $wgAutoloadClasses['Searchable'] = dirname(__FILE__) . '/Searchable.php';
+$wgAutoloadClasses['LogSearch'] = dirname(__FILE__) . '/LogSearch.php';
 $wgAutoloadClasses['MediaSearch'] = dirname(__FILE__) . '/MediaSearch.php';
 $wgAutoloadClasses['MUSHRobot'] = dirname(__FILE__) . '/MUSHRobot.php';
 $wgAutoloadClasses['LogUploader'] = dirname(__FILE__) . '/LogUploader.php';
