@@ -1,6 +1,6 @@
-<LINK href="/w/extensions/Calendar/calendar.css" rel="stylesheet" type="text/css"/>
-<SCRIPT src="/w/extensions/Calendar/jquery-1.2.6.js" type="text/javascript"></script>
-<SCRIPT src="/w/extensions/Calendar/calendar.js" type="text/javascript"></script>
+<LINK href="/w/extensions/MUSH/calendar.css" rel="stylesheet" type="text/css"/>
+<SCRIPT src="/w/extensions/MUSH/jquery-1.2.6.js" type="text/javascript"></script>
+<SCRIPT src="/w/extensions/MUSH/calendar.js" type="text/javascript"></script>
 
 <div class="calendar" id="{$id}">
 	<div class="calendar_title">

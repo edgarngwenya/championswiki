@@ -109,6 +109,11 @@
 	border: none;
 }
 
+li a {
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
 
 
 
