@@ -32,14 +32,25 @@ while ( $row = $dbr->fetchObject( $res ) ) {
 
 foreach ($articles as $article) {
 	if (isOldLogFormat($article)) {
-		print "Converted article: " . $article->getTitle() . "\n";
-		$article->doEdit(
-				updateContent($article->getTitle(), $article->getContent()), 
-				'Use new loginfo tag', 
-				EDIT_MINOR,
-				false,
-				$user);
-		break;
+		try {
+			$newContent = updateContent($article->getTitle(), $article->getContent());
+
+			if ($newContent) {
+				$article->doEdit(
+						$newContent,
+						'Use new loginfo tag', 
+						EDIT_MINOR,
+						false,
+						$user);
+				print "Converted article: " . $article->getTitle() . "\n";
+			}
+			else {
+				print "Failed to convert article: " . $article->getTitle() . "\n";
+			}
+		}
+		catch (Exception $e) {
+			print "Exception in convert article: " . $article->getTitle() . "\n";
+		}
 	}
 	else {
 		print "No need to convert article: " . $article->getTitle() . "\n";
@@ -53,7 +64,7 @@ function isOldLogFormat($article) {
 function convertCast($cast) {
 	$result = "\n";
 	
-	foreach (explode(",", $cast) as $member) {
+	foreach (explode(",", str_replace("<br>", "", $cast)) as $member) {
 		$result .= "\t<character>"
 			. trim(str_replace("]", "", str_replace("[", "", $member)))
 			. "</character>\n";
@@ -87,6 +98,6 @@ EOT;
 		return $template . preg_replace('/^\\{\\{Template\\:Log_Summary.*plot=([^\n]+).*cast=([^\n]+).*(\d{4}\\/\d{2}\\/\d{2}).*\\}\\}$/ms', '', $content);
 	}
 	
-	return $content;
+	return false;
 }
 ?>
