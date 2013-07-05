@@ -26,7 +26,6 @@ CREATE TABLE `log_info` (
   `plot` varchar(255) default NULL,
   `summary` text,
   `sequence_number` int(11) unsigned NOT NULL,
-  UNIQUE(plot, sequence_number),
   PRIMARY KEY  (`page_id`)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
