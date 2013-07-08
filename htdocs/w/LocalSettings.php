@@ -29,9 +29,6 @@ $wgMetaNamespace = "Champions_MUSH";
 $wgScriptPath = "/w";
 $wgScriptExtension = ".php";
 
-## The protocol and server name to use in fully-qualified URLs
-$wgServer = "http://localhost.championsmush.com";
-
 ## The relative URL path to the skins directory
 $wgStylePath = "$wgScriptPath/skins";
 
@@ -68,7 +65,7 @@ $wgMemCachedServers = array();
 
 ## To enable image uploads, make sure the 'images' directory
 ## is writable, then set this to true:
-$wgEnableUploads = false;
+$wgEnableUploads = true;
 #$wgUseImageMagick = true;
 #$wgImageMagickConvertCommand = "/usr/bin/convert";
 
