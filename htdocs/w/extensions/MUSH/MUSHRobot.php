@@ -11,7 +11,7 @@ class MUSHRobot {
 
 	public function connect() {
 		$this->socket = fsockopen($this->host, $this->port);
-		//stream_set_blocking($this->socket, 0);
+		stream_set_blocking($this->socket, 0);
 		return $this->socket;
 	}
 
