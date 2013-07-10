@@ -144,7 +144,7 @@ class LogUploader extends SpecialPage {
 
 		preg_match('/^(\d\d)[-\/]{1}(\d\d)[-\/]{1}(\d\d\d\d)$/', $params['date'], $match);
 		$date = sprintf('%s/%s/%s', $match[3], $match[1], $match[2]);
-		$plot = ( $params['plot'] ) ? $params['plot'] : 'None';
+		$plot = ( $params['plot'] ) ? $params['plot'] : '';
 		$text .= "\n\n[[Category:Logs|$articleTitle]] [[Category:Logs $date]]";
 
 		$cast = '';

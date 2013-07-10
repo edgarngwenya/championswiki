@@ -12,7 +12,7 @@ class LogInfo {
 		return
 			"{{Template:Log_Summary\n" .
 			"|name={{PAGENAME}}\n" .
-			"|plot=" . ( $this->plot ? "[[" . $this->plot . "]]" : "" ) . "\n" .
+			"|plot=" . ( $this->plot ? "[[" . $this->plot . "]]" : "None" ) . "\n" .
 			"|cast=" . $this->getCastLinks() . "\n" .
 			"|prevscene=" . $this->getPreviousSceneLink() . "\n" .
 			"|nextscene=" . $this->getNextSceneLink(). "\n" .
